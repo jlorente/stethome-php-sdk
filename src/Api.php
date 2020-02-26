@@ -50,7 +50,7 @@ class Api extends CoreApi
      * @return array
      * @see https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#947e93dc-97d0-4864-8b6b-24d15f018770
      */
-    public function getVisit(string $visitId)
+    public function getVisit($visitId)
     {
         return $this->_get("visit/$visitId/check");
     }
@@ -63,7 +63,7 @@ class Api extends CoreApi
      * @return array
      * @see https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#7b46673b-5505-41e1-bf61-6f0babe54964
      */
-    public function getPoint(string $visitId, int $point)
+    public function getPoint($visitId, $point)
     {
         return $this->_get("visit/$visitId/recording/$point/check");
     }
@@ -76,7 +76,7 @@ class Api extends CoreApi
      * @return array
      * @see https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#a664d3ed-4931-4fec-bc1b-c71cdc28f68a
      */
-    public function getPointTags(string $visitId, int $point)
+    public function getPointTags($visitId, $point)
     {
         return $this->_get("visit/$visitId/recording/$point/tags");
     }
@@ -89,7 +89,7 @@ class Api extends CoreApi
      * @return array
      * @see https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#35ad2fca-bc3c-4977-95c0-c034cad6270c
      */
-    public function getPointWav(string $visitId, int $point)
+    public function getPointWav($visitId, $point)
     {
         return $this->_get("visit/$visitId/recording/$point/wav");
     }
@@ -110,11 +110,12 @@ class Api extends CoreApi
     /**
      * Adds recording to visit with given id.
      *
+     * @param string $visitId
      * @param array $parameters
      * @return array
      * @see https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#eb72c015-046b-4fb6-8284-14bdb45bc9ea
      */
-    public function addPointRecord(string $visitId, array $parameters = [])
+    public function addPointRecord($visitId, array $parameters = [])
     {
         return $this->_post("visit/$visitId", [
                     RequestOptions::JSON => $parameters
