@@ -1,0 +1,26 @@
+{
+    "name": "jlorente/stethome-php-sdk",
+    "description": "A PHP package to access the StethoMe API by a comprehensive way.",
+    "keywords": [
+        "php",
+        "jlorente",
+        "stethome"
+    ],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "José Lorente",
+            "email": "jose.lorente.martin@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "guzzlehttp/guzzle": "~6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jlorente\\StethoMe\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
