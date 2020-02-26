@@ -51,7 +51,6 @@ https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#79b4672f-
 Returns a client token.
 
 ```php
-$stethome = new \Jlorente\StethoMe\StethoMe($secretVendorToken);
 $stethome->api()->getToken();
 ```
 
@@ -62,8 +61,57 @@ https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#947e93dc-
 Check processing status of all recordings associated with given visit id.
 
 ```php
-$stethome = new \Jlorente\StethoMe\StethoMe($secretVendorToken);
-$stethome->api()->getVisit(string $visitId);
+$stethome->api()->getVisit($visitId);
+```
+
+#### getPoint
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#7b46673b-5505-41e1-bf61-6f0babe54964
+
+Check processing status of single recording associated with given visit id.
+
+```php
+$stethome->api()->getPoint($visitId, $point);
+```
+
+#### getPointTags
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#a664d3ed-4931-4fec-bc1b-c71cdc28f68a
+
+Get analysed tags for a single recording from given visit id.
+
+```php
+$stethome->api()->getPointTags($visitId, $point);
+```
+
+#### getPointWav
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#35ad2fca-bc3c-4977-95c0-c034cad6270c
+
+Get single recording audio file for playback.
+
+```php
+$stethome->api()->getPointWav($visitId, $point);
+```
+
+#### getVisitId
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#1403949b-2a3c-4bc3-982c-7923f31f22f5
+
+Generate visit ID. All subsequent client requests will have to send this ID to properly match all recordings to same visit.
+
+```php
+$stethome->api()->getVisitId();
+```
+
+#### addPointRecord
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#eb72c015-046b-4fb6-8284-14bdb45bc9ea
+
+Adds recording to visit with given id.
+
+```php
+$stethome->api()->addPointRecord($visitId, array $parameters = []);
 ```
 
 ## License 
