@@ -44,7 +44,9 @@ $stethome->api()->getVisit($visitId);
 
 ### Methods
 
-*[getToken](https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#79b4672f-642c-4e47-8b89-7d7fe29762de)*
+#### getToken
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#79b4672f-642c-4e47-8b89-7d7fe29762de
 
 Returns a client token.
 
@@ -53,7 +55,16 @@ $stethome = new \Jlorente\StethoMe\StethoMe($secretVendorToken);
 $stethome->api()->getToken();
 ```
 
-Returns a client token.
+#### getVisit
+
+https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#947e93dc-97d0-4864-8b6b-24d15f018770
+
+Check processing status of all recordings associated with given visit id.
+
+```php
+$stethome = new \Jlorente\StethoMe\StethoMe($secretVendorToken);
+$stethome->api()->getVisit(string $visitId);
+```
 
 ## License 
 Copyright &copy; 2020 José Lorente Martín <jose.lorente.martin@gmail.com>.
