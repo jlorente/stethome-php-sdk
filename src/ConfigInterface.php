@@ -30,6 +30,13 @@ interface ConfigInterface
     public function baseUri();
 
     /**
+     * Returns the configuration headers.
+     *
+     * @return array
+     */
+    public function getHeaders();
+
+    /**
      * Returns the current package version.
      *
      * @return string

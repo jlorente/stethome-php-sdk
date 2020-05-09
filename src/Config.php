@@ -76,6 +76,14 @@ class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
+    public function getHeaders()
+    {
+        return [];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getVersion()
     {
         return $this->version;

@@ -194,7 +194,7 @@ abstract class Api implements ApiInterface
         if ($this->isAccessTokenValid($token) === false) {
             $token = $this->acquireAccessToken($config);
         }
-        return $token['token'];
+        return $token;
     }
 
     /**
