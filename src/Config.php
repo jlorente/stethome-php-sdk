@@ -23,6 +23,13 @@ class Config implements ConfigInterface
 {
 
     /**
+     * The current base URI.
+     * 
+     * @var string 
+     */
+    protected $baseUri;
+
+    /**
      * The current package version.
      *
      * @var string
@@ -52,11 +59,13 @@ class Config implements ConfigInterface
      * @return void
      * @throws \RuntimeException
      */
-    public function __construct($version, $vendorToken, $requestRetries = 0)
+    public function __construct($version, $vendorToken, $baseUri, $requestRetries = 0)
     {
         $this->setVersion($version);
 
         $this->setVendorToken($vendorToken ?: getenv('STETHOME_VENDOR_TOKEN'));
+
+        $this->setBaseUri($baseUri ?: getenv('STETHOME_BASE_URI'));
 
         $this->setRequestRetries($requestRetries ?: getenv('STETHOME_REQUEST_RETRIES') ?: 0);
 
@@ -68,17 +77,27 @@ class Config implements ConfigInterface
     /**
      * {@inheritdoc}
      */
-    public function baseUri()
+    public function getHeaders()
     {
-        return 'https://cert2.middleware.stethome.com/v1';
+        return [];
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getHeaders()
+    public function getBaseUri()
     {
-        return [];
+        return $this->baseUri;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setBaseUri($uri)
+    {
+        $this->baseUri = $uri;
+
+        return $this;
     }
 
     /**

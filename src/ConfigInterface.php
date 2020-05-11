@@ -23,18 +23,26 @@ interface ConfigInterface
 {
 
     /**
-     * Returns the API base uri.
-     *
-     * @return string
-     */
-    public function baseUri();
-
-    /**
      * Returns the configuration headers.
      *
      * @return array
      */
     public function getHeaders();
+
+    /**
+     * Returns the API base uri.
+     *
+     * @return string
+     */
+    public function getBaseUri();
+
+    /**
+     * Sets the API base uri.
+     *
+     * @param string $uri
+     * @return $this
+     */
+    public function setBaseUri($uri);
 
     /**
      * Returns the current package version.

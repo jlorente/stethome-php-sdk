@@ -40,12 +40,13 @@ class StethoMe
      * Constructor.
      *
      * @param string $vendorToken
+     * @param string $baseUri
      * @param int $requestRetries
      * @return void
      */
-    public function __construct($vendorToken = null, $requestRetries = null)
+    public function __construct($vendorToken = null, $baseUri = null, $requestRetries = null)
     {
-        $this->config = new Config(self::VERSION, $vendorToken, $requestRetries);
+        $this->config = new Config(self::VERSION, $vendorToken, $baseUri, $requestRetries);
     }
 
     /**

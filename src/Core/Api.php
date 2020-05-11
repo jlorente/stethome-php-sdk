@@ -26,7 +26,6 @@ use GuzzleHttp\Exception\ConnectException;
 use GuzzleHttp\Exception\TransferException;
 use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
-use GuzzleHttp\Psr7\Request;
 use Jlorente\StethoMe\ConfigInterface;
 use Jlorente\StethoMe\Exception\Handler;
 use Psr\Http\Message\RequestInterface;
@@ -138,7 +137,7 @@ abstract class Api implements ApiInterface
     protected function getClient(ConfigInterface $config)
     {
         return new Client([
-            'base_uri' => $config->baseUri(), 'handler' => $this->createHandler($config)
+            'base_uri' => $config->getBaseUri(), 'handler' => $this->createHandler($config)
         ]);
     }
 
@@ -216,7 +215,7 @@ abstract class Api implements ApiInterface
     protected function acquireAccessToken(ConfigInterface $config)
     {
         $client = new Client([
-            'base_uri' => $this->config->baseUri()
+            'base_uri' => $this->config->getBaseUri()
             , 'headers' => array_merge($config->getHeaders(), [
                 'Authorization' => 'Bearer ' . $config->getVendorToken()
             ])
