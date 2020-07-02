@@ -28,6 +28,7 @@ use GuzzleHttp\HandlerStack;
 use GuzzleHttp\Middleware;
 use Jlorente\StethoMe\ConfigInterface;
 use Jlorente\StethoMe\Exception\Handler;
+use Jlorente\StethoMe\Exception\UnauthorizedException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
@@ -121,9 +122,44 @@ abstract class Api implements ApiInterface
     public function execute($httpMethod, $url, array $parameters = [])
     {
         try {
-            $response = $this->getClient($this->config)->{$httpMethod}('/' . $url, $parameters);
+            return $this->doExecute($httpMethod, $url, $parameters);
+        } catch (ClientException $e) {
+            try {
+                new Handler($e);
+            } catch (UnauthorizedException $ex) {
+                return $this->handleUnauthorized($httpMethod, $url, $parameters);
+            }
+        }
+    }
 
-            return json_decode((string) $response->getBody(), true);
+    /**
+     * Executes the request without error control.
+     *
+     * @param string $httpMethod
+     * @param string $url
+     * @param array $parameters
+     * @return array
+     */
+    protected function doExecute($httpMethod, $url, array $parameters = [])
+    {
+        $response = $this->getClient($this->config)->{$httpMethod}('/' . $url, $parameters);
+
+        return json_decode((string) $response->getBody(), true);
+    }
+
+    /**
+     * Clears the current access token and tries to execute the request once more.
+     *
+     * @param string $httpMethod
+     * @param string $url
+     * @param array $parameters
+     * @return array
+     */
+    protected function handleUnauthorized($httpMethod, $url, array $parameters = [])
+    {
+        $this->setCachedAccessToken(null);
+        try {
+            return $this->doExecute($httpMethod, $url, $parameters);
         } catch (ClientException $e) {
             new Handler($e);
         }
