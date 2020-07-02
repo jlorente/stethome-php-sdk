@@ -142,9 +142,20 @@ abstract class Api implements ApiInterface
      */
     protected function doExecute($httpMethod, $url, array $parameters = [])
     {
-        $response = $this->getClient($this->config)->{$httpMethod}('/' . $url, $parameters);
+        $response = $this->getClient($this->config)->{$httpMethod}($this->composeUrl($url), $parameters);
 
         return json_decode((string) $response->getBody(), true);
+    }
+
+    /**
+     * Composes the url of the request.
+     * 
+     * @param string $url
+     * @return string
+     */
+    protected function composeUrl($url)
+    {
+        return '/' . $this->baseUri() . '/' . $url;
     }
 
     /**
@@ -248,6 +259,25 @@ abstract class Api implements ApiInterface
      * @param ConfigInterface $config
      * @return string
      */
+    protected function acquireScopedAccessToken(ConfigInterface $config, array $params = [])
+    {
+        $client = new Client([
+            'base_uri' => $this->config->getBaseUri()
+            , 'headers' => array_merge($config->getHeaders(), [
+                'Authorization' => 'Bearer ' . $config->getVendorToken()
+            ])
+        ]);
+        $responseBody = $client->post('token', $params)->getBody();
+        $response = json_decode((string) $responseBody, true);
+
+        return $response['token'];
+    }
+
+    /**
+     * 
+     * @param ConfigInterface $config
+     * @return string
+     */
     protected function acquireAccessToken(ConfigInterface $config)
     {
         $client = new Client([
@@ -280,6 +310,18 @@ abstract class Api implements ApiInterface
     public function setCachedAccessToken($token)
     {
         $this->cachedAccessToken = $token;
+    }
+
+    /**
+     * Returns the base uri fragment for this container. 
+     * 
+     * Do not set leading or ending slashes "/".
+     * 
+     * @return string
+     */
+    public function baseUri()
+    {
+        return '';
     }
 
 }

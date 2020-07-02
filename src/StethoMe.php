@@ -124,9 +124,21 @@ class StethoMe
      * @param  array  $parameters
      * @return \Jlorente\StethoMe\Core\ApiInterface
      */
-    public function api()
+    public function pulmonary()
     {
-        return new Api($this->config);
+        return new Pulmonary($this->config);
+    }
+
+    /**
+     * Dynamically handle missing methods.
+     *
+     * @param  string  $method
+     * @param  array  $parameters
+     * @return \Jlorente\StethoMe\Core\ApiInterface
+     */
+    public function security()
+    {
+        return new Security($this->config);
     }
 
 }

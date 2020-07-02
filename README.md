@@ -1,5 +1,5 @@
-StethoMe PHP SDK
-=============
+StethoMe PHP SDK v2
+===============
 A PHP package to access the [StethoMe API](https://stethome.me/docs/api) by a comprehensive way.
 
 ## Installation
@@ -39,79 +39,123 @@ key on instantiation.
 
 ```php
 $stethome = new \Jlorente\StethoMe\StethoMe($secretVendorToken);
-$stethome->api()->getVisit($visitId);
+$stethome->pulmonary()->getVisit($visitId);
 ```
 
 ### Methods
 
-#### getToken
+#### Security
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#79b4672f-642c-4e47-8b89-7d7fe29762de
+##### getToken
 
-Returns a client token.
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/security/get_token
+
+Generate client token for end user device.
 
 ```php
-$stethome->api()->getToken();
+$stethome->security()->getToken();
 ```
 
-#### getVisit
+##### postToken
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#947e93dc-97d0-4864-8b6b-24d15f018770
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/security/post_token
+
+Generate client token for end user device, scoped to given visits ids (recommended).
+
+```php
+$stethome->security()->postToken($params);
+```
+
+#### Pulmonary
+
+##### deleteVisit
+
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/delete_pulmonary_visit__id_
+
+Delete visit recordings.
+
+```php
+$stethome->pulmonary()->deleteVisit($visitId);
+```
+
+##### getVisit
+
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit
 
 Check processing status of all recordings associated with given visit id.
 
 ```php
-$stethome->api()->getVisit($visitId);
+$stethome->pulmonary()->getVisit($visitId);
 ```
 
-#### getPoint
+##### getPoint
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#7b46673b-5505-41e1-bf61-6f0babe54964
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit__id__recording__point__check
 
 Check processing status of single recording associated with given visit id.
 
 ```php
-$stethome->api()->getPoint($visitId, $point);
+$stethome->pulmonary()->getPoint($visitId, $point);
 ```
 
-#### getPointTags
+##### getPointTags
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#a664d3ed-4931-4fec-bc1b-c71cdc28f68a
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit__id__recording__point__tags
 
 Get analysed tags for a single recording from given visit id.
 
 ```php
-$stethome->api()->getPointTags($visitId, $point);
+$stethome->pulmonary()->getPointTags($visitId, $point);
 ```
 
-#### getPointWav
+##### getPointWav
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#35ad2fca-bc3c-4977-95c0-c034cad6270c
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit__id__recording__point__wav
 
 Get single recording audio file for playback.
 
 ```php
-$stethome->api()->getPointWav($visitId, $point);
+$stethome->pulmonary()->getPointWav($visitId, $point);
 ```
 
-#### getVisitId
+##### getVisitId
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#1403949b-2a3c-4bc3-982c-7923f31f22f5
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit
 
 Generate visit ID. All subsequent client requests will have to send this ID to properly match all recordings to same visit.
 
 ```php
-$stethome->api()->getVisitId();
+$stethome->pulmonary()->getVisitId();
 ```
 
-#### addPointRecord
+##### postVisitContent
 
-https://documenter.getpostman.com/view/6250828/S17m1BbV?version=latest#eb72c015-046b-4fb6-8284-14bdb45bc9ea
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/post_pulmonary_visit__id_
 
-Adds recording to visit with given id.
+Add visit content.
 
 ```php
-$stethome->api()->addPointRecord($visitId, array $parameters = []);
+$stethome->pulmonary()->postVisitContent($visitId, array $parameters = []);
+```
+
+##### copyVisit
+
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/get_pulmonary_visit__id__copy
+
+Create visit copy token.
+
+```php
+$stethome->pulmonary()->copyVisit($visitId);
+```
+
+##### lockVisit
+
+https://dev.middleware.stethome.com/docs/?url=/docs/file/v2/swagger.yaml#/pulmonary/post_pulmonary_visit__id__lock
+
+Lock visit.
+
+```php
+$stethome->pulmonary()->lockVisit($visitId);
 ```
 
 ## License 
