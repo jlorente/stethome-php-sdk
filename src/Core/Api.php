@@ -155,7 +155,7 @@ abstract class Api implements ApiInterface
      */
     protected function composeUrl($url)
     {
-        return '/' . $this->baseUri() . '/' . $url;
+        return $this->baseUri() . '/' . $url;
     }
 
     /**
